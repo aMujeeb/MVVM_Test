@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ViewHoldTet</string>
+    <string name="sign_in">Sign In</string>
+
+    <!-- Login -->
+    <string name="user_name_error">User Name Cannot be empty</string>
+    <string name="password_error">Password Cannot be empty</string>
+    <string name="ok">Ok</string>
+</resources>
