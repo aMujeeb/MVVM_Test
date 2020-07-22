@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.viewholdtet.R
 import com.example.viewholdtet.databinding.FragmentDetailsBinding
 import com.example.viewholdtet.utils.ImageUtils
 import com.example.viewholdtet.utils.ViewTesterConstants
 import com.example.viewholdtet.view_model.MovieDetailsViewModel
 import com.example.viewholdtet.views.fragment.BaseFragment
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class MovieDetailsFragment : BaseFragment() {
 
