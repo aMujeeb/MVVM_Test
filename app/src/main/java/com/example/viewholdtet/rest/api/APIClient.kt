@@ -5,6 +5,7 @@ import com.example.viewholdtet.rest.responses.CreateTokenResponse
 import com.example.viewholdtet.rest.responses.TrendingResponse
 import com.example.viewholdtet.utils.ViewTesterConstants
 import retrofit2.Call
+import retrofit2.Response
 
 class APIClient {
     companion object {
@@ -13,16 +14,23 @@ class APIClient {
                 WebApiRequestInterceptor()
             )
 
-        fun createUserToken(): Call<CreateTokenResponse> {
+        suspend fun createUserToken(): Response<CreateTokenResponse> {
             return mMovieDBApi.generateNewSessionToken(ViewTesterConstants.API_KEY)
         }
 
-        fun generateSessionWithCredentials(loginModel: LoginModel) : Call<CreateTokenResponse> {
-            return mMovieDBApi.createSessionValidatingWithLogin(ViewTesterConstants.API_KEY, loginModel)
+        suspend fun generateSessionWithCredentials(loginModel: LoginModel): Response<CreateTokenResponse> {
+            return mMovieDBApi.createSessionValidatingWithLogin(
+                ViewTesterConstants.API_KEY,
+                loginModel
+            )
         }
 
-        fun getTrendingMoviesOfTheWeek() : Call<TrendingResponse> {
-            return mMovieDBApi.getTrendingMoviesForWeek("movie", "week", ViewTesterConstants.API_KEY)
+        suspend fun getTrendingMoviesOfTheWeek(): Response<TrendingResponse> {
+            return mMovieDBApi.getTrendingMoviesForWeek(
+                "movie",
+                "week",
+                ViewTesterConstants.API_KEY
+            )
         }
     }
 }

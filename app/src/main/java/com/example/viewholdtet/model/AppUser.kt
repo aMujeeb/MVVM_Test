@@ -30,43 +30,17 @@ class AppUser {
             sInstance = instance
         }
 
-        fun requestToken(onResult: (isSuccess: Boolean, token: String?) -> Unit) {
-            APIClient.createUserToken().enqueue(object : Callback<CreateTokenResponse> {
-                override fun onFailure(call: Call<CreateTokenResponse>, t: Throwable) {
-                    onResult(false, null)
-                }
-
-                override fun onResponse(
-                    call: Call<CreateTokenResponse>,
-                    response: Response<CreateTokenResponse>
-                ) {
-                    if (response != null && response.isSuccessful) {
-                        onResult(true, response.body()!!.request_token)
-                    } else {
-                        onResult(false, null)
-                    }
-                }
-            })
+        suspend fun requestToken(onResult: (isSuccess: Boolean, token: String?) -> Unit) {
+            val response = APIClient.createUserToken()
+            onResult(response.isSuccessful, response.body()?.request_token)
         }
 
-        fun createAuthSession(loginModel: LoginModel, onResult: (isSuccess: Boolean, token: String?) -> Unit) {
-            APIClient.generateSessionWithCredentials(loginModel)
-                .enqueue(object : Callback<CreateTokenResponse> {
-                    override fun onFailure(call: Call<CreateTokenResponse>, t: Throwable) {
-                        onResult(false, null)
-                    }
-
-                    override fun onResponse(
-                        call: Call<CreateTokenResponse>,
-                        response: Response<CreateTokenResponse>
-                    ) {
-                        if (response != null && response.isSuccessful) {
-                            onResult(true, response.body()!!.request_token)
-                        } else {
-                            onResult(false, null)
-                        }
-                    }
-                })
+        suspend fun createAuthSession(
+            loginModel: LoginModel,
+            onResult: (isSuccess: Boolean, token: String?) -> Unit
+        ) {
+            val response = APIClient.generateSessionWithCredentials(loginModel)
+            onResult(response.isSuccessful, response.body()?.request_token)
         }
     }
 }

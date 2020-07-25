@@ -16,22 +16,8 @@ class Repository {
             }
     }
 
-    fun getWeeklyTrendingList(onResult: (isSuccess: Boolean, results: ArrayList<Movie>?) -> Unit) {
-        APIClient.getTrendingMoviesOfTheWeek().enqueue(object : Callback<TrendingResponse> {
-            override fun onFailure(call: Call<TrendingResponse>, t: Throwable) {
-                onResult(false, null)
-            }
-
-            override fun onResponse(
-                call: Call<TrendingResponse>,
-                response: Response<TrendingResponse>
-            ) {
-                if (response.isSuccessful) {
-                    onResult(true, response.body()!!.results)
-                } else {
-                    onResult(false, null)
-                }
-            }
-        })
+    suspend fun getWeeklyTrendingList(onResult: (isSuccess: Boolean, results: ArrayList<Movie>?) -> Unit) {
+        val response = APIClient.getTrendingMoviesOfTheWeek()
+        onResult(response.isSuccessful, response.body()?.results)
     }
 }
